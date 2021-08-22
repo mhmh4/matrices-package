@@ -1,5 +1,4 @@
 class Matrix:
-    """"""
 
     def __init__(self, entries):
         self.entries = entries
@@ -13,31 +12,24 @@ class Matrix:
         return "\n".join(str(row) for row in self.entries)
 
     def interchange(self, a: int, b: int) -> None:
-        """Swaps a matrix's rows at indices `a` and `b`."""
         if a < 0 or a == self.m or b < 0 or b == self.m:
             raise IndexError("an index is out of range")
         self.entries[a], self.entries[b] = self.entries[b], self.entries[a]
 
-    def replacement(self, c, row1, row2):
-        """"""
+    def replace(self, c, row1, row2):
+        ...
 
     def scale(self, c: float, i: int) -> None:
-        """Multiplies all entries of matrix's ith row by a non-zero constant `c`"""
         if c == 0:
             ...
         for j in range(self.n):
             self.entries[i][j] *= c
 
     def _has_equivalent_rows(self) -> bool:
-        """Returns True if all row lengths of the matrix's entries are
-        equal."""
         for row in self.entries:
             if len(row) != self.n:
                 return False
         return True
-
-    def _is_valid_matrix(self) -> bool:
-        ...
 
     def _is_square_matrix(self) -> bool:
         return self.m == self.n
@@ -49,8 +41,6 @@ class Matrix:
 
     @classmethod
     def from_dimensions(cls, m: int, n: int):
-        """Alternate constructor. Use this method if you want to create
-        a matrix from specified dimensions. All entries will be 0."""
         tmp = [[0] * n] * m
         return cls(tmp)
 
