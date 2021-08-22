@@ -1,9 +1,20 @@
 class Matrix:
 
-    def __init__(self, entries):
+    def __init__(self, entries: list[list]):
+        if not entries or not entries[0]:
+            ...
+
         self.entries = entries
-        self.m = len(entries)
-        self.n = len(entries[0])
+        if not self._entries_has_consistent_row_lengths():
+            raise ...
+
+    @property
+    def m(self):
+        return len(self.entries)
+
+    @property
+    def n(self):
+        return len(self.entries[0])
 
     def __getitem__(self, index: int) -> int:
         return self.entries[index]
@@ -25,7 +36,7 @@ class Matrix:
         for j in range(self.n):
             self.entries[i][j] *= c
 
-    def _has_equivalent_rows(self) -> bool:
+    def _entries_has_consistent_row_lengths(self) -> bool:
         for row in self.entries:
             if len(row) != self.n:
                 return False
