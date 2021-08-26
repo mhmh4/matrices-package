@@ -1,7 +1,14 @@
 import unittest
 
-from exceptions import *
+from exceptions import (
+    BadIndexException,
+    EmptyMatrixException,
+    InconsistentRowDimensionsException,
+    InvalidDimensionsException,
+    ZeroConstantException
+)
 from matrix import Matrix
+
 
 class TestMatrix(unittest.TestCase):
 

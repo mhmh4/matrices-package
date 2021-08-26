@@ -1,4 +1,10 @@
-from exceptions import *
+from exceptions import (
+    BadIndexException,
+    EmptyMatrixException,
+    InconsistentRowDimensionsException,
+    InvalidDimensionsException,
+    ZeroConstantException
+)
 
 
 class Matrix:
