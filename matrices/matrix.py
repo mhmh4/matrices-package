@@ -18,12 +18,11 @@ class Matrix:
     def __add__(self, other):
         if not self._has_similar_dimensions_as(other):
             ...
-        result = []
+        result = Matrix.from_dimensions(self.m, self.n)
         for i in range(self.m):
-            result.append([])
             for j in range(self.n):
-                result[-1].append(self[i][j] + other[i][j])
-        return Matrix(result)
+                result[i][j] = self[i][j] + other[i][j]
+        return result
 
     def __eq__(self, other):
         return self.entries == other.entries
@@ -37,7 +36,7 @@ class Matrix:
         result = Matrix.from_dimensions(self.m, other.n)
         for i in range(self.m):
             for j in range(other.n):
-                for k in range(other.m):
+                for k in range(self.n):
                     result[i][j] += self[i][k] * other[k][j]
         return result
 
@@ -50,15 +49,16 @@ class Matrix:
     def __sub__(self, other):
         if not self._has_similar_dimensions_as(other):
             ...
-        result = []
+        result = Matrix.from_dimensions(self.m, self.n)
         for i in range(self.m):
-            result.append([])
             for j in range(self.n):
-                result[-1].append(self[i][j] - other[i][j])
-        return Matrix(result)
+                result[i][j] = self[i][j] - other[i][j]
+        return result
 
     def scale(self, constant, i):
         if constant == 0:
+            ...
+        if not self._valid_row_index(i):
             ...
         for j in range(self.n):
             self.entries[i][j] *= constant
@@ -83,27 +83,21 @@ class Matrix:
     def _valid_row_index(self, index):
         return index >= 0 and index <= self.m
 
-    def _valid_col_index(self, index):
-        return index >= 0 and index <= self.n
-
     def _entries_has_consistent_row_dimensions(self):
         for row in self.entries:
             if len(row) != self.n:
                 return False
         return True
 
-    def _is_square_matrix(self):
-        return self.m == self.n
-
     def _has_similar_dimensions_as(self, other):
         return self.m == other.m and self.n == other.n
 
     @classmethod
     def from_dimension(cls, n):
-        tmp = [0] * n
+        tmp = [0 for _ in range(n)]
         return cls(tmp)
 
     @classmethod
     def from_dimensions(cls, m, n):
-        tmp = [[0] * n] * m
+        tmp = [[0 for _ in range(n)] for _ in range(m)]
         return cls(tmp)
