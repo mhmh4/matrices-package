@@ -1,6 +1,3 @@
-# from exceptions import ZeroConstantException
-
-
 class Matrix:
 
     def __init__(self, entries):
@@ -21,11 +18,15 @@ class Matrix:
     def __add__(self, other):
         if not self._has_similar_dimensions_as(other):
             ...
-        result = Matrix.from_dimensions(self.m, self.n)
+        result = []
         for i in range(self.m):
+            result.append([])
             for j in range(self.n):
-                result[i][j] = self[i][j] + other[i][j]
-        return result
+                result[-1].append(self[i][j] + other[i][j])
+        return Matrix(result)
+
+    def __eq__(self, other):
+        return self.entries == other.entries
 
     def __getitem__(self, index):
         return self.entries[index]
@@ -36,7 +37,7 @@ class Matrix:
         result = Matrix.from_dimensions(self.m, other.n)
         for i in range(self.m):
             for j in range(other.n):
-                for k in range(self.n):
+                for k in range(other.m):
                     result[i][j] += self[i][k] * other[k][j]
         return result
 
@@ -47,8 +48,14 @@ class Matrix:
         self.entries[index] = value
 
     def __sub__(self, other):
-        if not Matrix.have_similar_dimensions(self, other):
+        if not self._has_similar_dimensions_as(other):
             ...
+        result = []
+        for i in range(self.m):
+            result.append([])
+            for j in range(self.n):
+                result[-1].append(self[i][j] - other[i][j])
+        return Matrix(result)
 
     def scale(self, constant, i):
         if constant == 0:
@@ -57,6 +64,8 @@ class Matrix:
             self.entries[i][j] *= constant
 
     def interchange(self, a, b):
+        if not self._valid_row_index(a) or not self._valid_row_index(b):
+            ...
         if a < 0 or a == self.m or b < 0 or b == self.m:
             ...
         self.entries[a], self.entries[b] = self.entries[b], self.entries[a]
@@ -67,6 +76,9 @@ class Matrix:
         temp = [constant * x for x in self.entries[a]]
         for j in range(self.n):
             self.entries[b][j] += temp[j]
+
+    def transpose(self):
+        self.entries = [[*x] for x in zip(*self.entries)]
 
     def _valid_row_index(self, index):
         return index >= 0 and index <= self.m
