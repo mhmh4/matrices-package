@@ -1,4 +1,8 @@
-class DissimilarDimensionsException(BaseException):
+class BadIndexException(BaseException):
+    ...
+
+
+class EmptyMatrixException(BaseException):
     ...
 
 
@@ -6,7 +10,7 @@ class InconsistentRowDimensionsException(BaseException):
     ...
 
 
-class NotSquareMatrixException(BaseException):
+class InvalidDimensionsException(BaseException):
     ...
 
 

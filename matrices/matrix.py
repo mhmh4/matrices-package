@@ -1,11 +1,15 @@
+from exceptions import *
+
+
 class Matrix:
 
     def __init__(self, entries):
         if not entries or not entries[0]:
-            ...
+            raise EmptyMatrixException("matrix entries cannot be empty")
         self.entries = entries
         if not self._entries_has_consistent_row_dimensions():
-            ...
+            raise InconsistentRowDimensionsException(
+                "all rows must be of the same length")
 
     @property
     def m(self):
@@ -17,7 +21,8 @@ class Matrix:
 
     def __add__(self, other):
         if not self._has_similar_dimensions_as(other):
-            ...
+            raise InvalidDimensionsException(
+                "dimensions of both matrices must be similar")
         result = Matrix.from_dimensions(self.m, self.n)
         for i in range(self.m):
             for j in range(self.n):
@@ -32,7 +37,10 @@ class Matrix:
 
     def __mul__(self, other):
         if self.n != self.m:
-            ...
+            raise InvalidDimensionsException(
+                "number of columns of the first matrix must be equal "
+                "to the number of rows of the second matrix"
+            )
         result = Matrix.from_dimensions(self.m, other.n)
         for i in range(self.m):
             for j in range(other.n):
@@ -48,7 +56,8 @@ class Matrix:
 
     def __sub__(self, other):
         if not self._has_similar_dimensions_as(other):
-            ...
+            raise InvalidDimensionsException(
+                "dimensions of both matrices must be similar")
         result = Matrix.from_dimensions(self.m, self.n)
         for i in range(self.m):
             for j in range(self.n):
@@ -57,22 +66,22 @@ class Matrix:
 
     def scale(self, constant, i):
         if constant == 0:
-            ...
+            raise ZeroConstantException("cannot scale a row by zero")
         if not self._valid_row_index(i):
-            ...
+            raise BadIndexException("an index was out of range")
         for j in range(self.n):
             self.entries[i][j] *= constant
 
     def interchange(self, a, b):
         if not self._valid_row_index(a) or not self._valid_row_index(b):
-            ...
-        if a < 0 or a == self.m or b < 0 or b == self.m:
-            ...
+            raise BadIndexException("an index was out of range")
         self.entries[a], self.entries[b] = self.entries[b], self.entries[a]
 
     def replace(self, constant, a, b):
         if constant == 0:
-            ...
+            raise ZeroConstantException("cannot multiply a row by zero")
+        if not self._valid_row_index(a) or not self._valid_row_index(b):
+            raise BadIndexException("an index was out of range")
         temp = [constant * x for x in self.entries[a]]
         for j in range(self.n):
             self.entries[b][j] += temp[j]
@@ -94,7 +103,7 @@ class Matrix:
 
     @classmethod
     def from_dimension(cls, n):
-        tmp = [0 for _ in range(n)]
+        tmp = [[0 for _ in range(n)]]
         return cls(tmp)
 
     @classmethod
