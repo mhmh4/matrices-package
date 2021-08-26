@@ -36,7 +36,7 @@ class Matrix:
         return self.entries[index]
 
     def __mul__(self, other):
-        if self.n != self.m:
+        if self.n != other.m:
             raise InvalidDimensionsException(
                 "number of columns of the first matrix must be equal "
                 "to the number of rows of the second matrix"
@@ -68,20 +68,20 @@ class Matrix:
         if constant == 0:
             raise ZeroConstantException("cannot scale a row by zero")
         if not self._valid_row_index(i):
-            raise BadIndexException("an index was out of range")
+            raise BadIndexException("index is out of range")
         for j in range(self.n):
             self.entries[i][j] *= constant
 
     def interchange(self, a, b):
         if not self._valid_row_index(a) or not self._valid_row_index(b):
-            raise BadIndexException("an index was out of range")
+            raise BadIndexException("an index is out of range")
         self.entries[a], self.entries[b] = self.entries[b], self.entries[a]
 
     def replace(self, constant, a, b):
         if constant == 0:
             raise ZeroConstantException("cannot multiply a row by zero")
         if not self._valid_row_index(a) or not self._valid_row_index(b):
-            raise BadIndexException("an index was out of range")
+            raise BadIndexException("an index is out of range")
         temp = [constant * x for x in self.entries[a]]
         for j in range(self.n):
             self.entries[b][j] += temp[j]
@@ -90,7 +90,7 @@ class Matrix:
         self.entries = [[*x] for x in zip(*self.entries)]
 
     def _valid_row_index(self, index):
-        return index >= 0 and index <= self.m
+        return index >= 0 and index < self.m
 
     def _entries_has_consistent_row_dimensions(self):
         for row in self.entries:
