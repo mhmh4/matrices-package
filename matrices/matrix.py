@@ -108,8 +108,8 @@ class Matrix:
         return self.m == other.m and self.n == other.n
 
     @classmethod
-    def from_dimension(cls, n):
-        tmp = [[0 for _ in range(n)]]
+    def from_dimension(cls, m):
+        tmp = [[0 for _ in range(m)]]
         return cls(tmp)
 
     @classmethod
