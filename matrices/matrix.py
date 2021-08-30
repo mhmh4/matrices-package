@@ -19,10 +19,12 @@ class Matrix:
 
     @property
     def m(self):
+        """Returns the number of rows of the matrix."""
         return len(self.entries)
 
     @property
     def n(self):
+        """Returns the number of columns of the matrix."""
         return len(self.entries[0])
 
     def __add__(self, other):
@@ -71,6 +73,7 @@ class Matrix:
         return result
 
     def scale(self, constant, i):
+        """Scales the ith row by a nonzero constant."""
         if constant == 0:
             raise ZeroConstantException("cannot scale a row by zero")
         if not self._valid_row_index(i):
@@ -79,11 +82,13 @@ class Matrix:
             self.entries[i][j] *= constant
 
     def interchange(self, a, b):
+        """Swaps two rows of the matrix."""
         if not self._valid_row_index(a) or not self._valid_row_index(b):
             raise BadIndexException("an index is out of range")
         self.entries[a], self.entries[b] = self.entries[b], self.entries[a]
 
     def replace(self, constant, a, b):
+        """Replaces row `b` by the sum of itself and a multiple of row `a`."""
         if constant == 0:
             raise ZeroConstantException("cannot multiply a row by zero")
         if not self._valid_row_index(a) or not self._valid_row_index(b):
@@ -93,6 +98,7 @@ class Matrix:
             self.entries[b][j] += temp[j]
 
     def transpose(self):
+        """Converts the matrix's rows to columns in-place."""
         self.entries = [[*x] for x in zip(*self.entries)]
 
     def _valid_row_index(self, index):
@@ -109,10 +115,12 @@ class Matrix:
 
     @classmethod
     def from_dimension(cls, m):
+        """Returns a zero matrix of dimensions `m` by 1"""
         tmp = [[0 for _ in range(m)]]
         return cls(tmp)
 
     @classmethod
     def from_dimensions(cls, m, n):
+        """Returns a zero matrix of dimensions `m` by `n`"""
         tmp = [[0 for _ in range(n)] for _ in range(m)]
         return cls(tmp)
