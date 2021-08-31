@@ -93,7 +93,7 @@ m1[0][0] = -1
 m0 == m1
 
 # string representation
-print(repr(m1))
+repr(m1)
 
 # there are two properties, m and n, which returns the number of rows and columns, respectively
 num_rows = m1.m
