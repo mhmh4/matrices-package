@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This is my first attempt at creating a Python package. It's more a learning project than something that can be published for others to actually use. [NumPy](https://github.com/numpy/numpy) is a very popular Python library that efficiently implements matrices and includes a lot of other useful methods. Although I could've used it as a reference to help build this package, I decided not to as I would like to try to improve the project on my own—pull requests are still welcome!
+This is my first attempt at creating a Python package. It's more of a learning project than something that can be published for others to actually use. [NumPy](https://github.com/numpy/numpy) is a very popular Python library that efficiently implements matrices and includes a lot of other useful methods. Although I could've used it as a reference to help build this package, I decided not to as I would like to try to improve the project on my own—pull requests are still welcome!
 
 <div align="center">
   <img width="50%" src="assets/example.png">
